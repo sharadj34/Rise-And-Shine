@@ -55,23 +55,6 @@ A beautiful, modern Flutter app for event management, team engagement, and socia
 
 ---
 
-## 💡 Customization
-- Update assets in `assets/images/` for your own branding.
-- Edit `lib/screens/` for new features or UI tweaks.
-- Add your own backend or connect to Firebase for real-time data.
-
----
-
-## 🤝 Contributing
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
----
-
-## 📧 Contact
-For support or business inquiries, contact [your-email@example.com](mailto:your-email@example.com)
-
----
-
 ## ⭐ If you like this project, give it a star!
 
 ---
