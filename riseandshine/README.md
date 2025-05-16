@@ -1,4 +1,4 @@
-# 🌅 Rise and Shine
+# Rise and Shine
 
 A beautiful, modern Flutter app for event management, team engagement, and social sharing! 🚀
 
