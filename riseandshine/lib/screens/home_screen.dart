@@ -47,7 +47,9 @@ class HomeScreen extends StatelessWidget {
                         ),
                         IconButton(
                           icon: const Icon(Icons.notifications_none, color: Colors.white),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/notifications');
+                          },
                         ),
                       ],
                     ),
@@ -60,14 +62,14 @@ class HomeScreen extends StatelessWidget {
                   top: 70,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
                           'Upcoming Events',
-                          style: TextStyle(
+                    style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
@@ -75,11 +77,11 @@ class HomeScreen extends StatelessWidget {
                         _UpcomingEventCard(),
                       ],
                     ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
           // Scrollable Content
           Expanded(
             child: SingleChildScrollView(
@@ -92,12 +94,12 @@ class HomeScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: FlutterCarousel(
-                        options: CarouselOptions(
+              options: CarouselOptions(
                           height: 140,
-                          autoPlay: true,
-                          enlargeCenterPage: true,
+                autoPlay: true,
+                enlargeCenterPage: true,
                           aspectRatio: 16 / 9,
-                          autoPlayInterval: const Duration(seconds: 3),
+                autoPlayInterval: const Duration(seconds: 3),
                           viewportFraction: 0.85,
                         ),
                         items: [
@@ -119,7 +121,7 @@ class HomeScreen extends StatelessWidget {
                     // Featured Speakers
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
+                        child: Text(
                         'Featured Speakers',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -128,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Padding(
+            Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Card(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -177,13 +179,13 @@ class HomeScreen extends StatelessWidget {
                               ),
                               // Right: Session Info
                               Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
+                children: [
+                  const Text(
                                       'Session: Way to a Calm Mind',
-                                      style: TextStyle(
+                    style: TextStyle(
                                         fontWeight: FontWeight.w900,
                                         fontSize: 13,
                                         color: Colors.black,
@@ -206,15 +208,15 @@ class HomeScreen extends StatelessWidget {
                                             ),
                                             overflow: TextOverflow.ellipsis,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -236,7 +238,12 @@ class HomeScreen extends StatelessWidget {
                       child: Column(
                         children: List.generate(4, (index) => Padding(
                           padding: const EdgeInsets.only(bottom: 16.0),
-                          child: _buildFeedTile(index),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/feed');
+                            },
+                            child: _buildFeedTile(index),
+                          ),
                         )),
                       ),
                     ),
@@ -265,7 +272,7 @@ class HomeScreen extends StatelessWidget {
           Container(
             width: 200,
             height: 120,
-            decoration: BoxDecoration(
+        decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               gradient: LinearGradient(
                 colors: [Colors.black.withOpacity(0.5), Colors.transparent],

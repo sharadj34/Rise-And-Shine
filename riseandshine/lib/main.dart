@@ -4,8 +4,9 @@ import 'screens/splash_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/feed_screen.dart';
-import 'screens/feed_posting_screen.dart';
+import 'screens/feed_post_screen.dart';
 import 'screens/comment_screen.dart';
+import 'screens/notification_screen.dart';
 import 'providers/auth_provider.dart';
 import 'providers/feed_provider.dart';
 
@@ -46,8 +47,9 @@ class MyApp extends StatelessWidget {
           '/login': (context) => const LoginScreen(),
           '/home': (context) => const HomeScreen(),
           '/feed': (context) => const FeedScreen(),
-          '/post': (context) => const FeedPostingScreen(),
+          '/post': (context) => const FeedPostScreen(),
           '/comments': (context) => const CommentScreen(),
+          '/notifications': (context) => const NotificationScreen(),
         },
       ),
     );

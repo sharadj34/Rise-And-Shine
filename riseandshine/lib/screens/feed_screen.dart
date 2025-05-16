@@ -1,119 +1,236 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
-import '../providers/feed_provider.dart';
+import 'feed_post_screen.dart';
 
-class FeedScreen extends StatelessWidget {
+class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
+
+  @override
+  State<FeedScreen> createState() => _FeedScreenState();
+}
+
+class _FeedScreenState extends State<FeedScreen> {
+  // Mock feed data
+  List<Map<String, dynamic>> feeds = [
+    {
+      'user': 'Ankit Rastogi',
+      'avatar': 'assets/images/Ios/avatar 1@3x.png',
+      'time': '30 minutes ago',
+      'image': 'assets/images/Ios/posted image 1.png',
+      'caption': 'Plantation Activity made fun!',
+      'likes': 105,
+      'comments': 10,
+      'liked': false,
+    },
+    {
+      'user': 'Kalpana',
+      'avatar': 'assets/images/Ios/avatar 2@3x.png',
+      'time': '5 hours ago',
+      'image': 'assets/images/Ios/posted image 2.png',
+      'caption': 'Fitness check, which team will win?',
+      'likes': 224,
+      'comments': 18,
+      'liked': true,
+    },
+    {
+      'user': 'Ankit Rastogi',
+      'avatar': 'assets/images/Ios/avatar 1@3x.png',
+      'time': '30 minutes ago',
+      'image': 'assets/images/Ios/posted image 1.png',
+      'caption': 'Plantation Activity made fun!',
+      'likes': 105,
+      'comments': 10,
+      'liked': false,
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Feed'),
+      backgroundColor: const Color(0xFFF8F8F8),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(90),
+        child: Stack(
+          children: [
+            Image.asset(
+              'assets/images/Ios/top bg.png',
+              width: double.infinity,
+              height: 150,
+              fit: BoxFit.cover,
+            ),
+            SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/Ios/home logo.png',
+                        height: 48,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.edit, color: Colors.white, size: 28),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FeedPostScreen()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-      body: Consumer<FeedProvider>(
-        builder: (context, feedProvider, child) {
-          return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: feedProvider.posts.length,
-            itemBuilder: (context, index) {
-              final post = feedProvider.posts[index];
-              return Card(
-                margin: const EdgeInsets.only(bottom: 16),
+      body: ListView.builder(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        itemCount: feeds.length,
+        itemBuilder: (context, index) {
+          final feed = feeds[index];
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+            child: Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+              elevation: 4,
+              margin: EdgeInsets.zero,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Post header
-                    ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.blue.shade100,
-                        child: Text(
-                          post.userId[0].toUpperCase(),
-                          style: const TextStyle(color: Colors.blue),
+                    // Top Row: Avatar, Name, Time, Delete
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: AssetImage(feed['avatar']),
+                          radius: 22,
                         ),
-                      ),
-                      title: Text(
-                        'User ${post.userId}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        DateFormat('MMM d, y • h:mm a').format(post.timestamp),
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    ),
-                    // Post content
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        post.content,
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    // Post images
-                    if (post.images.isNotEmpty)
-                      SizedBox(
-                        height: 200,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: post.images.length,
-                          itemBuilder: (context, imageIndex) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.asset(
-                                  post.images[imageIndex],
-                                  width: 200,
-                                  height: 200,
-                                  fit: BoxFit.cover,
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                feed['user'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16,
+                                  color: Colors.black,
                                 ),
                               ),
-                            );
+                              Text(
+                                'posted ${feed['time']}',
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  color: Color(0xFFFF9800),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete_outline, color: Colors.black54),
+                          onPressed: () {
+                            setState(() {
+                              feeds.removeAt(index);
+                            });
                           },
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                    // Post Image
+                    AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Image.asset(
+                          feed['image'],
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    // Post actions
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          IconButton(
-                            icon: Icon(
-                              post.isLiked
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color: post.isLiked ? Colors.red : null,
+                    ),
+                    const SizedBox(height: 14),
+                    // Like/Comment Row
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              feed['liked'] = !feed['liked'];
+                              feed['likes'] += feed['liked'] ? 1 : -1;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                feed['liked'] ? Icons.favorite : Icons.favorite_border,
+                                color: Color(0xFFE91E63),
+                                size: 24,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                feed['likes'].toString(),
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              feed['comments'].toString(),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                            onPressed: () => feedProvider.toggleLike(post.id),
-                          ),
-                          Text(
-                            '${post.likesCount}',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(width: 16),
-                          IconButton(
-                            icon: const Icon(Icons.comment_outlined),
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                '/comments',
-                                arguments: post,
-                              );
-                            },
-                          ),
-                          Text(
-                            '${post.comments.length}',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                            const SizedBox(width: 6),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/comments',
+                                  arguments: feed,
+                                );
+                              },
+                              child: Icon(Icons.mode_comment_outlined, color: Color(0xFFE91E63), size: 22),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    // Caption
+                    Text(
+                      feed['caption'],
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ],
                 ),
-              );
-            },
+              ),
+            ),
           );
         },
       ),
